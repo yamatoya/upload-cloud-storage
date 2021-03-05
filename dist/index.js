@@ -17515,16 +17515,12 @@ class UploadHelper {
      * @param destination The destination prefix.
      * @returns The UploadResponse which contains the file and metadata.
      */
-    uploadFile(bucketName, filename, gzip, destination, root) {
-        var _a;
+    uploadFile(bucketName, filename, gzip, destination) {
         return __awaiter(this, void 0, void 0, function* () {
             const options = { gzip };
             if (destination) {
                 // If obj prefix is set, then extract filename and append to prefix.
-                options.destination = [destination, path.posix.basename(filename)].filter(Boolean).join('/');
-            }
-            if (root) {
-                options.destination = (_a = options.destination) === null || _a === void 0 ? void 0 : _a.substr(0, options.destination.lastIndexOf("/"));
+                options.destination = `${destination}/${path.posix.basename(filename)}`;
             }
             const uploadedFile = yield this.storage
                 .bucket(bucketName)
@@ -17549,12 +17545,12 @@ class UploadHelper {
             const filesList = yield util_1.getFiles(directoryPath);
             const resp = yield Promise.all(filesList.map((filePath) => __awaiter(this, void 0, void 0, function* () {
                 // Get relative path from directoryPath.
-                let destination = `${path.posix.dirname(path.posix.relative(pathDirName, filePath))}`;
+                let destination = `${path.posix.dirname(root ? filePath : path.posix.relative(pathDirName, filePath))}`;
                 // If prefix is set, prepend.
                 if (prefix) {
                     destination = `${prefix}/${destination}`;
                 }
-                const uploadResp = yield this.uploadFile(bucketName, filePath, gzip, destination, root);
+                const uploadResp = yield this.uploadFile(bucketName, filePath, gzip, destination);
                 return uploadResp;
             })));
             return resp;
