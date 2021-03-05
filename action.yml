@@ -24,6 +24,10 @@ inputs:
     description: |-
       Upload file(s) with gzip content encoding, defaults to true.
     required: false
+  root:
+    description: |-
+      Upload the contents of a directory, but not the directory itself. Defaults to false.
+    required: false
 
 runs:
   using: "node12"
