@@ -17549,7 +17549,10 @@ class UploadHelper {
                 console.log(filePath, destination);
                 // If prefix is set, prepend.
                 if (prefix) {
-                    destination = `${prefix}/${destination}`;
+                    if (root)
+                        destination = prefix;
+                    else
+                        destination = `${prefix}/${destination}`;
                 }
                 const uploadResp = yield this.uploadFile(bucketName, filePath, gzip, destination);
                 return uploadResp;
