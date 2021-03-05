@@ -57,7 +57,7 @@ export class UploadHelper {
     const options: UploadOptions = { gzip };
     if (destination) {
       // If obj prefix is set, then extract filename and append to prefix.
-      options.destination = `${destination}/${path.posix.basename(filename)}`;
+      options.destination = [destination, path.posix.basename(filename)].filter(Boolean).join('/');
     }
     if (root) {
       options.destination = options.destination?.substr(0, options.destination.lastIndexOf("/"))
