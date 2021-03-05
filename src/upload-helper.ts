@@ -79,6 +79,7 @@ export class UploadHelper {
     directoryPath: string,
     gzip: boolean,
     prefix = '',
+    root: boolean,
   ): Promise<UploadResponse[]> {
     const pathDirName = path.posix.dirname(directoryPath);
     // Get list of files in the directory.
@@ -90,6 +91,9 @@ export class UploadHelper {
         let destination = `${path.posix.dirname(
           path.posix.relative(pathDirName, filePath),
         )}`;
+        if (root) {
+          destination = destination.substr(0, destination.lastIndexOf("/"))
+        }
         // If prefix is set, prepend.
         if (prefix) {
           destination = `${prefix}/${destination}`;

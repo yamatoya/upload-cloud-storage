@@ -64,6 +64,7 @@ export class Client {
     destination: string,
     path: string,
     gzip: boolean,
+    root: boolean,
   ): Promise<UploadResponse[]> {
     let bucketName = destination;
     let prefix = '';
@@ -90,6 +91,7 @@ export class Client {
         path,
         gzip,
         prefix,
+        root,
       );
       return uploadedFiles;
     }

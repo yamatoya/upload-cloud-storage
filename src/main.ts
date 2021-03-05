@@ -20,12 +20,13 @@ import { Client } from './client';
 async function run(): Promise<void> {
   try {
     const path = core.getInput('path', { required: true });
+    const root = core.getInput('root', { required: false }) === 'false' ? false : true;
     const destination = core.getInput('destination', { required: true });
     const gzip =
       core.getInput('gzip', { required: false }) === 'false' ? false : true;
     const serviceAccountKey = core.getInput('credentials');
     const client = new Client({ credentials: serviceAccountKey });
-    const uploadResponses = await client.upload(destination, path, gzip);
+    const uploadResponses = await client.upload(destination, path, gzip, root);
 
     core.setOutput(
       'uploaded',
