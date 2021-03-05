@@ -88,9 +88,8 @@ export class UploadHelper {
     const resp = await Promise.all(
       filesList.map(async (filePath) => {
         // Get relative path from directoryPath.
-        let destination = `${path.posix.dirname(
-          root ? filePath : path.posix.relative(pathDirName, filePath),
-        )}`;
+        let destination = path.posix.dirname(path.posix.relative(pathDirName, filePath));
+        console.log(filePath, destination)
         // If prefix is set, prepend.
         if (prefix) {
           destination = `${prefix}/${destination}`;
