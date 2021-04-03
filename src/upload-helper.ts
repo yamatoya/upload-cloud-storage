@@ -81,7 +81,8 @@ export class UploadHelper {
     prefix = '',
     root: boolean,
   ): Promise<UploadResponse[]> {
-    const pathDirName = path.posix.dirname(directoryPath);
+    if (root) const pathDirName = directoryPath
+    else const pathDirName = path.posix.dirname(directoryPath);
     // Get list of files in the directory.
     const filesList = await getFiles(directoryPath);
 
@@ -92,8 +93,7 @@ export class UploadHelper {
         console.log(filePath, destination)
         // If prefix is set, prepend.
         if (prefix) {
-          if (root) destination = ''
-          else destination = `${prefix}/${destination}`;
+          destination = `${prefix}/${destination}`;
         }
 
         const uploadResp = await this.uploadFile(
