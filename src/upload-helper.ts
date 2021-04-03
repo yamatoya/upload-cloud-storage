@@ -81,8 +81,8 @@ export class UploadHelper {
     prefix = '',
     root: boolean,
   ): Promise<UploadResponse[]> {
-    if (root) const pathDirName = directoryPath
-    else const pathDirName = path.posix.dirname(directoryPath);
+    const pathDirName = path.posix.dirname(directoryPath);
+    console.log('pathDirName:' + pathDirName);
     // Get list of files in the directory.
     const filesList = await getFiles(directoryPath);
 

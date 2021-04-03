@@ -17541,6 +17541,7 @@ class UploadHelper {
     uploadDirectory(bucketName, directoryPath, gzip, prefix = '', root) {
         return __awaiter(this, void 0, void 0, function* () {
             const pathDirName = path.posix.dirname(directoryPath);
+            console.log('pathDirName:' + pathDirName);
             // Get list of files in the directory.
             const filesList = yield util_1.getFiles(directoryPath);
             const resp = yield Promise.all(filesList.map((filePath) => __awaiter(this, void 0, void 0, function* () {
@@ -17549,10 +17550,7 @@ class UploadHelper {
                 console.log(filePath, destination);
                 // If prefix is set, prepend.
                 if (prefix) {
-                    if (root)
-                        destination = prefix;
-                    else
-                        destination = `${prefix}/${destination}`;
+                    destination = `${prefix}/${destination}`;
                 }
                 const uploadResp = yield this.uploadFile(bucketName, filePath, gzip, destination);
                 return uploadResp;
