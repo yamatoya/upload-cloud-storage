@@ -56,7 +56,7 @@ export class UploadHelper {
     const options: UploadOptions = { gzip };
     if (destination) {
       // If obj prefix is set, then extract filename and append to prefix.
-      options.destination = `${destination}/${path.posix.basename(filename)}`
+      options.destination = `${destination}/${path.posix.basename(filename)}`;
     }
     const uploadedFile = await this.storage
       .bucket(bucketName)
@@ -81,16 +81,22 @@ export class UploadHelper {
     prefix = '',
     root: boolean,
   ): Promise<UploadResponse[]> {
-    const pathDirName = path.posix.dirname(directoryPath);
-    console.log('pathDirName:' + pathDirName);
+    let pathDirName: string;
+    if (root) {
+      pathDirName = directoryPath;
+    } else {
+      pathDirName = path.posix.dirname(directoryPath);
+    }
     // Get list of files in the directory.
     const filesList = await getFiles(directoryPath);
 
     const resp = await Promise.all(
       filesList.map(async (filePath) => {
         // Get relative path from directoryPath.
-        let destination = path.posix.dirname(path.posix.relative(pathDirName, filePath));
-        console.log(filePath, destination)
+        let destination = path.posix.dirname(
+          path.posix.relative(pathDirName, filePath),
+        );
+        console.log(filePath, destination);
         // If prefix is set, prepend.
         if (prefix) {
           destination = `${prefix}/${destination}`;
