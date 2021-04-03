@@ -92,7 +92,7 @@ export class UploadHelper {
         console.log(filePath, destination)
         // If prefix is set, prepend.
         if (prefix) {
-          if (root) destination = prefix
+          if (root) destination = ''
           else destination = `${prefix}/${destination}`;
         }
 
