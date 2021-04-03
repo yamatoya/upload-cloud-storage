@@ -96,6 +96,9 @@ export class UploadHelper {
         let destination = path.posix.dirname(
           path.posix.relative(pathDirName, filePath),
         );
+        if (destination == './') {
+          destination = '';
+        }
         console.log(filePath, destination);
         // If prefix is set, prepend.
         if (prefix) {
