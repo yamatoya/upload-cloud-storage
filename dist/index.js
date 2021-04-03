@@ -17552,7 +17552,7 @@ class UploadHelper {
             const resp = yield Promise.all(filesList.map((filePath) => __awaiter(this, void 0, void 0, function* () {
                 // Get relative path from directoryPath.
                 let destination = path.posix.dirname(path.posix.relative(pathDirName, filePath));
-                if (destination == './') {
+                if (destination == './' || destination == '/' || destination == '.') {
                     destination = '';
                 }
                 console.log(filePath, destination);
